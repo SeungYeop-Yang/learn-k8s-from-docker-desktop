@@ -21,4 +21,6 @@ Please install the items below:
 $ export IBMCLOUD_API_KEY=<YOUR IBMCLOUD_API_KEY>
 $ docker-compose run dev-env
 ```
-## Available Tools
+## Easy start
+
+I have installed Docker Desktop and its kubernetes to avoid exhaustion from k8s installation/initial admin.
