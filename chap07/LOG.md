@@ -93,6 +93,68 @@ creation, with no re-allocation even if the node fails.
 We instead need to create a controller to manage the Pod for us. :
 There are many, we start with `the Deployment`.
 
-```
+Background:
+Kubernetes has evolved its controller resources over time. The first type of controller, RelicationController,
+provided only basic functionality. It was replaced by the RelicaSet, which has improvements in how it identifies
+which Pods to manage.
+Part of the reason to replace RelicationControllers with ReplicaSets is that ReplicationControllers were
+becoming more and more complicated, making the code difficult to maintain. The new approach splits up
+controller responsibility between ReplicaSets and Deployments. ReplicaSets are responsible for basic Pod
+management, including monitoring Pod status and performing failover. Deployments are responsible for
+tracking changes to the Pod template caused by configuration changes or container image updates.
+Deployments and ReplicaSets work together, but the Deployment creates its own ReplicaSet, so we usually need to
+interact only with Deployments.
+
+-The Book of Kubernetes, Alan Hohn, 2022, No Starch Press
 
 ```
+08:09:14 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k apply -f nginx-deploy.yaml
+deployment.apps/nginx created
+08:09:30 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get deployment nginx
+NAME    READY   UP-TO-DATE   AVAILABLE   AGE
+nginx   3/3     3            3           8s
+08:09:38 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get pod nginx
+Error from server (NotFound): pods "nginx" not found
+08:09:45 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get pod
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-6bdbc5b656-fmgmk   1/1     Running   0          20s
+nginx-6bdbc5b656-n76gt   1/1     Running   0          20s
+nginx-6bdbc5b656-x7jl2   1/1     Running   0          20s
+08:09:50 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get replicasets
+NAME               DESIRED   CURRENT   READY   AGE
+nginx-6bdbc5b656   3         3         3       63s
+08:10:33 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k describe deployment nginx
+Name:                   nginx
+Namespace:              default
+CreationTimestamp:      Sat, 25 Feb 2023 20:09:30 +0000
+Labels:                 <none>
+Annotations:            deployment.kubernetes.io/revision: 1
+Selector:               app=nginx
+Replicas:               3 desired | 3 updated | 3 total | 3 available | 0 unavailable
+StrategyType:           RollingUpdate
+MinReadySeconds:        0
+RollingUpdateStrategy:  25% max unavailable, 25% max surge
+Pod Template:
+  Labels:  app=nginx
+  Containers:
+   nginx:
+    Image:      nginx
+    Port:       <none>
+    Host Port:  <none>
+    Requests:
+      cpu:        100m
+    Environment:  <none>
+    Mounts:       <none>
+  Volumes:        <none>
+Conditions:
+  Type           Status  Reason
+  ----           ------  ------
+  Available      True    MinimumReplicasAvailable
+  Progressing    True    NewReplicaSetAvailable
+OldReplicaSets:  <none>
+NewReplicaSet:   nginx-6bdbc5b656 (3/3 replicas created)
+Events:
+  Type    Reason             Age   From                   Message
+  ----    ------             ----  ----                   -------
+  Normal  ScalingReplicaSet  104s  deployment-controller  Scaled up replica set nginx-6bdbc5b656 to 3
+08:11:14 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→

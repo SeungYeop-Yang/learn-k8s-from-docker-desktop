@@ -4,14 +4,22 @@
 
 
 # learning_k8s
-##
+
+The purpose: going through a kubernetes learning book so that whether my friends/team members can learn k8s
+without huge effort to install k8s. I have installed Docker Desktop and its kubernetes to avoid exhaustion
+from k8s installation/initial admin.
+
+
+## Book
+[The Book of Kubernetes](https://learning.oreilly.com/library/view/the-book-of/9781098141394/), Alan Hohn, 2022, No Starch Press
+https://learning.oreilly.com/library/view/the-book-of/9781098141394/
+
+## PREP
+
 tested in Ubuntu 18.04..22.04 and macOS Ventura
 Host:
 - linux/amd64
 - linux/arm64
-
-
-## PREP
 
 Please install the items below:
 * docker
@@ -22,6 +30,3 @@ Please install the items below:
 $ export IBMCLOUD_API_KEY=<YOUR IBMCLOUD_API_KEY>
 $ docker-compose run dev-env
 ```
-## Easy start
-
-I have installed Docker Desktop and its kubernetes to avoid exhaustion from k8s installation/initial admin.
