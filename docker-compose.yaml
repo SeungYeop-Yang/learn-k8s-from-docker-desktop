@@ -6,7 +6,7 @@
 ##########################################################
 # Run:
 #   docker-compose run dev-env
-version: "3.3"
+version: "3"
 services:
   dev-env:
     privileged: true
