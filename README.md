@@ -1,9 +1,8 @@
-[![pre-commit](https://github.com/ibm-xaas/dev-template/actions/workflows/pre-commit.yaml/badge.svg?branch=main)](https://github.com/ibm-xaas/dev-template/actions/workflows/pre-commit.yaml)
 [![@seungyeop's Holopin board](https://holopin.me/seungyeop)](https://holopin.io/@seungyeop)
 [![fed-dev-hero](https://images.credly.com/size/220x220/images/2b1a505f-ece9-445b-b830-38ef5141b5a3/IBM-Federated-Developer-Hero.png)](https://www.credly.com/badges/406d727d-0799-4de7-88fe-b0ef2528375a/public_url)
 
 
-# dev-template
+# learning_k8s
 ##
 tested in Ubuntu 18.04..22.04 and macOS Ventura
 Host:
@@ -22,6 +21,6 @@ Please install the items below:
 $ export IBMCLOUD_API_KEY=<YOUR IBMCLOUD_API_KEY>
 $ docker-compose run dev-env
 ```
-## Available Tools
+## Easy start
 
-The available tools can be found in [dev-env repo](https://github.com/ibm-xaas/dev-env)
+I have installed Docker Desktop and its kubernetes to avoid exhaustion from k8s installation/initial admin.
