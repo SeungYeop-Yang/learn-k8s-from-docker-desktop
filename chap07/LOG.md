@@ -157,4 +157,60 @@ Events:
   Type    Reason             Age   From                   Message
   ----    ------             ----  ----                   -------
   Normal  ScalingReplicaSet  104s  deployment-controller  Scaled up replica set nginx-6bdbc5b656 to 3
-08:11:14 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→
+08:11:14 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get --help
+    -l, --selector='':
+        Selector (label query) to filter on, supports '=', '==', and '!='.(e.g. -l key1=value1,key2=value2). Matching
+        objects must satisfy all of the specified label constraints.
+08:21:12 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get all -l app=nginx
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-6bdbc5b656-fmgmk   1/1     Running   0          12m
+pod/nginx-6bdbc5b656-n76gt   1/1     Running   0          12m
+pod/nginx-6bdbc5b656-x7jl2   1/1     Running   0          12m
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-6bdbc5b656   3         3         3       12m
+08:22:22 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→
+08:25:12 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k delete pod/nginx-6bdbc5b656-fmgmk
+pod "nginx-6bdbc5b656-fmgmk" deleted
+08:25:31 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get all -l app=nginx
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-6bdbc5b656-gkln8   1/1     Running   0          6s
+pod/nginx-6bdbc5b656-n76gt   1/1     Running   0          16m
+pod/nginx-6bdbc5b656-x7jl2   1/1     Running   0          16m
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-6bdbc5b656   3         3         3       16m
+08:25:36 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→
+08:25:36 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k scale --replicas=4 deployment nginx
+deployment.apps/nginx scaled
+08:26:23 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get all -l app=nginx
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-6bdbc5b656-gkln8   1/1     Running   0          57s
+pod/nginx-6bdbc5b656-n76gt   1/1     Running   0          16m
+pod/nginx-6bdbc5b656-qbl2n   1/1     Running   0          4s
+pod/nginx-6bdbc5b656-x7jl2   1/1     Running   0          16m
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-6bdbc5b656   4         4         4       16m
+08:26:27 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→
+08:27:51 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k scale --replicas=2 deployment nginx
+deployment.apps/nginx scaled
+08:28:05 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get all -l app=nginx
+NAME                         READY   STATUS    RESTARTS   AGE
+pod/nginx-6bdbc5b656-n76gt   1/1     Running   0          18m
+pod/nginx-6bdbc5b656-x7jl2   1/1     Running   0          18m
+
+NAME                               DESIRED   CURRENT   READY   AGE
+replicaset.apps/nginx-6bdbc5b656   2         2         2       18m
+08:28:15 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→
+08:31:29 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k delete -f nginx-deploy.yaml
+deployment.apps "nginx" deleted
+08:31:38 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get deployment
+No resources found in default namespace.
+08:31:45 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get pod
+No resources found in default namespace.
+08:31:50 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get replicasets
+No resources found in default namespace.
+08:31:55 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→
+
+```
