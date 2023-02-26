@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: sleep
+spec:
+  selector:
+    matchLabels:
+      app: sleep
+  serviceName: sleep
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: sleep
+    spec:
+      containers:
+      - name: sleep
+        image: busybox
+        command: ["/bin/sleep", "3600"]
+        volumeMounts:
+        - name: sleep-volume
+          mountPath: /storagedir
+  volumeClaimTemplates:
+  - metadata:
+      name: sleep-volume
+    spec:
+      #storageClassName: longhorn
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Mi
