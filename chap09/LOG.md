@@ -226,3 +226,110 @@ Commercial support is available at
 Seungs-MacBook-Air-M1:~ seungyeop$
 ```
 <img width="555" alt="image" src="https://user-images.githubusercontent.com/32415268/221424875-963615aa-a774-4dcd-8da4-4f3be84e0607.png">
+
+# Ingress Services
+
+failed on testing ingress....
+
+```
+05:02:08 ubuntu@86358bd60c1e dev-env ±|chap09 ✗|→ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.41.2/deploy/static/provider/cloud/deploy.yaml
+namespace/ingress-nginx created
+serviceaccount/ingress-nginx created
+configmap/ingress-nginx-controller created
+clusterrole.rbac.authorization.k8s.io/ingress-nginx created
+clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx created
+role.rbac.authorization.k8s.io/ingress-nginx created
+rolebinding.rbac.authorization.k8s.io/ingress-nginx created
+service/ingress-nginx-controller-admission created
+service/ingress-nginx-controller created
+deployment.apps/ingress-nginx-controller created
+validatingwebhookconfiguration.admissionregistration.k8s.io/ingress-nginx-admission created
+serviceaccount/ingress-nginx-admission created
+clusterrole.rbac.authorization.k8s.io/ingress-nginx-admission created
+clusterrolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created
+role.rbac.authorization.k8s.io/ingress-nginx-admission created
+rolebinding.rbac.authorization.k8s.io/ingress-nginx-admission created
+job.batch/ingress-nginx-admission-create created
+job.batch/ingress-nginx-admission-patch created
+05:05:38 ubuntu@86358bd60c1e dev-env ±|chap09 ✗|→
+05:05:40 ubuntu@86358bd60c1e dev-env ±|chap09 ✗|→
+05:05:40 ubuntu@86358bd60c1e dev-env ±|chap09 ✗|→
+05:05:40 ubuntu@86358bd60c1e dev-env ±|chap09 ✗|→ k -n ingress-nginx get deploy
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+ingress-nginx-controller   0/1     1            0           12s
+05:05:49 ubuntu@86358bd60c1e dev-env ±|chap09 ✗|→
+05:15:12 ubuntu@86358bd60c1e dev-env ±|chap09 ✗|→ kubectl delete -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v0.41.2/deploy/static/provider/cloud/deploy.yaml
+namespace "ingress-nginx" deleted
+serviceaccount "ingress-nginx" deleted
+configmap "ingress-nginx-controller" deleted
+clusterrole.rbac.authorization.k8s.io "ingress-nginx" deleted
+clusterrolebinding.rbac.authorization.k8s.io "ingress-nginx" deleted
+role.rbac.authorization.k8s.io "ingress-nginx" deleted
+rolebinding.rbac.authorization.k8s.io "ingress-nginx" deleted
+service "ingress-nginx-controller-admission" deleted
+service "ingress-nginx-controller" deleted
+deployment.apps "ingress-nginx-controller" deleted
+validatingwebhookconfiguration.admissionregistration.k8s.io "ingress-nginx-admission" deleted
+serviceaccount "ingress-nginx-admission" deleted
+clusterrole.rbac.authorization.k8s.io "ingress-nginx-admission" deleted
+clusterrolebinding.rbac.authorization.k8s.io "ingress-nginx-admission" deleted
+role.rbac.authorization.k8s.io "ingress-nginx-admission" deleted
+rolebinding.rbac.authorization.k8s.io "ingress-nginx-admission" deleted
+job.batch "ingress-nginx-admission-create" deleted
+job.batch "ingress-nginx-admission-patch" deleted
+05:15:57 ubuntu@86358bd60c1e dev-env ±|chap09 ✗|→ helm upgrade --install ingress-nginx ingress-nginx   --repo https://kubernetes.github.io/ingress-nginx   --namespace ingress-nginx --create-namespace
+Release "ingress-nginx" does not exist. Installing it now.
+NAME: ingress-nginx
+LAST DEPLOYED: Sun Feb 26 17:16:00 2023
+NAMESPACE: ingress-nginx
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+The ingress-nginx controller has been installed.
+It may take a few minutes for the LoadBalancer IP to be available.
+You can watch the status by running 'kubectl --namespace ingress-nginx get services -o wide -w ingress-nginx-controller'
+
+An example Ingress that makes use of the controller:
+  apiVersion: networking.k8s.io/v1
+  kind: Ingress
+  metadata:
+    name: example
+    namespace: foo
+  spec:
+    ingressClassName: nginx
+    rules:
+      - host: www.example.com
+        http:
+          paths:
+            - pathType: Prefix
+              backend:
+                service:
+                  name: exampleService
+                  port:
+                    number: 80
+              path: /
+    # This section is only required if TLS is to be enabled for the Ingress
+    tls:
+      - hosts:
+        - www.example.com
+        secretName: example-tls
+
+If TLS is enabled for the Ingress, a Secret containing the certificate and key must also be provided:
+
+  apiVersion: v1
+  kind: Secret
+  metadata:
+    name: example-tls
+    namespace: foo
+  data:
+    tls.crt: <base64 encoded cert>
+    tls.key: <base64 encoded key>
+  type: kubernetes.io/tls
+05:16:15 ubuntu@86358bd60c1e dev-env ±|chap09 ✗|→
+05:16:15 ubuntu@86358bd60c1e dev-env ±|chap09 ✗|→ kubectl get pods --namespace=ingress-nginx
+NAME                                        READY   STATUS    RESTARTS   AGE
+ingress-nginx-controller-6b94c75599-jvf74   1/1     Running   0          51s
+05:17:01 ubuntu@86358bd60c1e dev-env ±|chap09 ✗|→
+
+```
