@@ -213,4 +213,49 @@ No resources found in default namespace.
 No resources found in default namespace.
 08:31:55 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→
 
+04:46:34 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k apply -f sleep-job.yaml
+job.batch/sleep created
+04:46:48 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get job
+NAME    COMPLETIONS   DURATION   AGE
+sleep   0/1           7s         7s
+04:46:55 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get pods
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-6bdbc5b656-7v6bb   1/1     Running   0          8h
+nginx-6bdbc5b656-gfh8t   1/1     Running   0          8h
+nginx-6bdbc5b656-swhqr   1/1     Running   0          8h
+sleep-m9x84              1/1     Running   0          14s
+04:47:02 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k delete -f nginx-scaler.yaml
+horizontalpodautoscaler.autoscaling "nginx" deleted
+04:47:27 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k delete -f nginx-deploy.yaml
+deployment.apps "nginx" deleted
+04:47:40 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get pod
+NAME          READY   STATUS      RESTARTS   AGE
+sleep-m9x84   0/1     Completed   0          55s
+04:46:34 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k apply -f sleep-job.yaml
+job.batch/sleep created
+04:46:48 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get job
+NAME    COMPLETIONS   DURATION   AGE
+sleep   0/1           7s         7s
+04:46:55 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get pods
+NAME                     READY   STATUS    RESTARTS   AGE
+nginx-6bdbc5b656-7v6bb   1/1     Running   0          8h
+nginx-6bdbc5b656-gfh8t   1/1     Running   0          8h
+nginx-6bdbc5b656-swhqr   1/1     Running   0          8h
+sleep-m9x84              1/1     Running   0          14s
+04:47:02 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k delete -f ngin
+nginx-deploy.yaml  nginx-pod.yaml     nginx-scaler.yaml
+04:47:02 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k delete -f nginx-scaler.yaml
+horizontalpodautoscaler.autoscaling "nginx" deleted
+04:47:27 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k delete -f ngi
+nginx-deploy.yaml  nginx-pod.yaml     nginx-scaler.yaml
+04:47:27 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k delete -f nginx-deploy.yaml
+deployment.apps "nginx" deleted
+04:47:40 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get pod
+NAME          READY   STATUS      RESTARTS   AGE
+sleep-m9x84   0/1     Completed   0          55s
+04:56:39 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k delete -f sleep-cronjob.yaml
+cronjob.batch "sleep" deleted
+04:56:53 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→ k get cronjobs
+No resources found in default namespace.
+04:56:56 ubuntu@01a688cab5a1 chap07 ±|chap07 ✗|→
 ```
